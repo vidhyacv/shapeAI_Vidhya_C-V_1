@@ -1,0 +1,110 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Vidhya_C V.ipynb",
+      "provenance": []
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "background_save": true,
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DkOCa3be2jTv",
+        "outputId": "918d9eef-be3c-4ebd-aab9-8f06dbc8e737"
+      },
+      "source": [
+        " \n",
+        "from keras.datasets import mnist \n",
+        "data = mnist.load_data() \n",
+        "((X_train, y_train), (X_test, y_test)) = data \n",
+        "X_train = X_train.reshape ((X_train.shape [0], 28*28)).astype('float32') \n",
+        "X_test = X_test.reshape((X_test.shape [0], 28*28)).astype('float32')\n",
+        " \n",
+        " \n",
+        "X_train = X_train / 255 \n",
+        "X_test = X_test / 255 \n",
+        "from keras.utils import np_utils \n",
+        "print(y_test.shape) \n",
+        "y_train = np_utils.to_categorical(y_train) \n",
+        "y_test = np_utils.to_categorical(y_test)\n",
+        " \n",
+        "num_classes = y_test.shape[1] \n",
+        "print(y_test.shape)\n",
+        "from keras.models import Sequential \n",
+        "from keras. layers import Dense \n",
+        "model = Sequential () \n",
+        "model.add(Dense(32, input_dim = 28*28, activation='relu')) \n",
+        "model.add (Dense(64, activation='relu')) \n",
+        "model.add (Dense(10, activation='softmax'))\n",
+        " \n",
+        "model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) \n",
+        "model.summary()\n",
+        "model.fit(X_train, y_train, epochs=10, batch_size=100)\n",
+        "scores = model.evaluate(X_test, y_test) \n",
+        "print(scores)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz\n",
+            "11493376/11490434 [==============================] - 0s 0us/step\n",
+            "(10000,)\n",
+            "(10000, 10)\n",
+            "Model: \"sequential\"\n",
+            "_________________________________________________________________\n",
+            "Layer (type)                 Output Shape              Param #   \n",
+            "=================================================================\n",
+            "dense (Dense)                (None, 32)                25120     \n",
+            "_________________________________________________________________\n",
+            "dense_1 (Dense)              (None, 64)                2112      \n",
+            "_________________________________________________________________\n",
+            "dense_2 (Dense)              (None, 10)                650       \n",
+            "=================================================================\n",
+            "Total params: 27,882\n",
+            "Trainable params: 27,882\n",
+            "Non-trainable params: 0\n",
+            "_________________________________________________________________\n",
+            "Epoch 1/10\n",
+            "600/600 [==============================] - 2s 2ms/step - loss: 0.7920 - accuracy: 0.7721\n",
+            "Epoch 2/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.2142 - accuracy: 0.9383\n",
+            "Epoch 3/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.1580 - accuracy: 0.9539\n",
+            "Epoch 4/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.1307 - accuracy: 0.9615\n",
+            "Epoch 5/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.1139 - accuracy: 0.9650\n",
+            "Epoch 6/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.0976 - accuracy: 0.9709\n",
+            "Epoch 7/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.0857 - accuracy: 0.9742\n",
+            "Epoch 8/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.0765 - accuracy: 0.9770\n",
+            "Epoch 9/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.0702 - accuracy: 0.9792\n",
+            "Epoch 10/10\n",
+            "600/600 [==============================] - 1s 2ms/step - loss: 0.0647 - accuracy: 0.9804\n",
+            "313/313 [==============================] - 0s 1ms/step - loss: 0.1037 - accuracy: 0.9685\n",
+            "[0.10366873443126678, 0.968500018119812]\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    }
+  ]
+}
